@@ -1,7 +1,7 @@
 class GuitarBuilder
   attr_reader :guitar
 
-  def initialize
+  def initialize()
     @guitar = Guitar.new
   end
 
@@ -27,7 +27,7 @@ class GuitarBuilder
   end
 
   def craft_body(material, width, depth)
-    @guitar.body = GuitarBody.new(material,width,depth)
+    @guitar.body = GuitarBody.new(material, width, depth)
   end
 
   def paint_body(color)
@@ -94,15 +94,15 @@ class FretBoard
   end
 end
 
- guitar_builder = GuitarBuilder.new
- guitar_builder.select_number_of_strings(6)
- guitar_builder.configure_strings(27, 4, 0.7)
- guitar_builder.craft_body("cedar", 24, 12)
- guitar_builder.paint_body("cherry red")
- guitar_builder.set_sound_hole_diameter(6)
- guitar_builder.add_fretboard(27, 3)
-
- guitar = guitar_builder.guitar
-
- puts guitar.inspect
+ # guitar_builder = GuitarBuilder.new
+ # guitar_builder.select_number_of_strings(3)
+ # guitar_builder.configure_strings(27, 4, 0.7)
+ # guitar_builder.craft_body("cedar", 24, 12)
+ # guitar_builder.paint_body("cherry red")
+ # guitar_builder.set_sound_hole_diameter(6)
+ # guitar_builder.add_fretboard(27, 3)
+ #
+ # guitar = guitar_builder.guitar
+ #
+ # puts guitar.inspect
 
