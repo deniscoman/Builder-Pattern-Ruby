@@ -84,18 +84,29 @@ describe GuitarBuilder do
     let(:width) { 10 }
     let(:depth) { 10 }
     subject {guitar_builder.craft_body(material, width, depth)}
-    it ' should sets correct craft body for the guitar' do
-      subject
-      expect(guitar.body).to eq subject
+    it ' should sets correct material for the guitar' do
+      expect(subject.material).to eq material
+    end
+    it ' should sets correct width for the guitar' do
+      expect(subject.width).to eq width
+    end
+    it ' should sets correct depth for the guitar' do
+      expect(subject.depth).to eq depth
     end
   end
 
   describe '#paint_body' do
     let(:color) { "blue" }
-    subject { guitar_builder.paint_body(color) }
+    let(:material){ "cedar" }
+    let(:width) { 10 }
+    let(:depth) { 10 }
+    subject {guitar_builder.paint_body(color)}
+    before do
+      guitar_builder.craft_body(material, width, depth)
+    end
     it 'should sets correct color to the guitar' do
       subject
-      expect(guitar.body.color).to match_array(subject)
+      expect(guitar.body.color).to eq color
     end
   end
 
@@ -103,9 +114,11 @@ describe GuitarBuilder do
     let(:length) { 10 }
     let(:width) { 10 }
     subject {guitar_builder.add_fretboard(length, width) }
-    it 'should add fretboard' do
-      subject
-      expect(guitar.fretboard).to eq subject
+    it 'should add length to the guitar' do
+      expect(subject.length).to eq length
+    end
+    it 'should add width to the guitar' do
+      expect(subject.length).to eq width
     end
   end
 
@@ -114,18 +127,38 @@ describe GuitarBuilder do
     subject {guitar_builder.select_number_of_strings(number) }
     it 'should select number of the strings from the guitar' do
       subject
-      expect(guitar.build_strings(number)).to eq subject
+      expect(guitar.strings.length).to eq number
     end
   end
 
   describe '#configure_strings' do
+    let(:number) {10}
     let(:string_length) {10}
     let(:string_tension) {10}
     let(:string_linear_density) {10}
-    subject {guitar_builder.configure_strings(string_length, string_tension, string_linear_density) }
-    it 'should configure strings' do
+    subject { guitar_builder.configure_strings(string_length, string_tension, string_linear_density) }
+    before do
+      guitar_builder.select_number_of_strings(number)
+    end
+    it 'should configure strings length' do
       subject
-      expect(guitar.strings).to eq subject
+      guitar.strings.each do |strings|
+        expect(strings.length).to eq string_length
+      end
+    end
+
+    it 'should configure strings tension' do
+      subject
+      guitar.strings.each do |strings|
+        expect(strings.tension).to eq string_tension
+      end
+    end
+
+    it 'should configure strings linear density' do
+      subject
+      guitar.strings.each do |strings|
+        expect(strings.linear_density).to eq string_linear_density
+      end
     end
   end
 end
